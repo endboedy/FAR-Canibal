@@ -87,8 +87,7 @@ function saveComponent(index) {
 }
 
 async function saveToGitHubFile() {
-  const token = "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
-"; // Ganti dengan token kamu
+  const token = "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"; // Ganti dengan token kamu
   const owner = "endboedy"; // Ganti dengan username GitHub kamu
   const repo = "EM-Compoenent"; // Ganti dengan nama repo kamu
   const path = "data.json";
