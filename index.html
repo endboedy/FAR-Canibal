@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Component Life EM</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Component Life EM</h1>
+    <nav>
+      <button onclick="showMenu('monitoring')">Monitoring Component</button>
+      <button onclick="showMenu('smu')">Current SMU</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="monitoring" class="menu-section">
+      <h2>Monitoring Component</h2>
+      <button onclick="addNewComponent()">➕ Add New Component</button>
+      <table id="componentTable">
+        <thead>
+          <tr>
+            <th>Equipment</th><th>Model</th><th>SMCS</th><th>Component</th><th>Freq</th><th>Cost</th>
+            <th>Change Out</th><th>Next Change</th><th>SMU</th><th>Life</th><th>%</th><th>Rating</th>
+            <th>Foto</th><th>Remarks</th><th>Action</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section id="smu" class="menu-section" style="display:none;">
+      <h2>Update Current SMU</h2>
+      <form onsubmit="updateSMU(event)">
+        <input type="text" id="equipmentInput" placeholder="Equipment" required />
+        <input type="number" id="smuInput" placeholder="SMU" required />
+        <button type="submit">Update</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
