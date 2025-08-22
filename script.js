@@ -145,16 +145,26 @@ async function saveToGitHubFile() {
 // ====== LOAD FROM GITHUB ======
 async function loadFromGitHubFile() {
   try {
+    // Debug: pastikan variabel benar
+    console.log("🔹 owner:", owner, "repo:", repo, "path:", path, "token:", token ? "ada" : "tidak ada");
+
+    // Fetch file dari GitHub
     const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
-      headers: token ? { Authorization: `Bearer ${token}` } : undefined
+      headers: token ? { Authorization: `token ${token}` } : undefined
     });
 
-    if (!res.ok) throw new Error(`GitHub GET error: ${res.status} ${res.statusText}`);
+    // Jika status bukan 200 OK
+    if (!res.ok) {
+      throw new Error(`GitHub GET error: ${res.status} ${res.statusText}`);
+    }
 
     const fileData = await res.json();
+
     if (fileData.content) {
+      // Decode base64 dan parse JSON
       const decodedContent = atob(fileData.content.replace(/\n/g, ''));
       data = JSON.parse(decodedContent);
+
       renderTable();
       console.log("✅ Data berhasil dimuat dari GitHub");
     } else {
