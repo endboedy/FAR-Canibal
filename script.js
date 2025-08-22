@@ -84,10 +84,38 @@ function uploadFoto(index, input) {
 
 function saveComponent(index) {
   console.log("Component saved:", data.components[index]);
-  // Simpan ke GitHub JSON via API (bisa ditambahkan nanti)
+}
+
+async function saveToGitHubFile() {
+  const token = "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
+"; // Ganti dengan token kamu
+  const owner = "endboedy"; // Ganti dengan username GitHub kamu
+  const repo = "EM-Compoenent"; // Ganti dengan nama repo kamu
+  const path = "data.json";
+
+  const getRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  const fileData = await getRes.json();
+  const sha = fileData.sha;
+
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+  const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      message: "Update data.json via Component Life EM",
+      content: content,
+      sha: sha
+    })
+  });
+
+  const result = await res.json();
+  console.log("GitHub update result:", result);
+  alert("✅ Data berhasil disimpan ke GitHub!");
 }
 
 renderTable();
-
-
-<button onclick="saveToGitHubFile()">💾 Save All to GitHub</button>
