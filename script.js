@@ -125,19 +125,35 @@ async function saveToGitHubFile() {
     })
   });
 
-  const result = await res.json();
-  console.log("GitHub update result:", result);
-  alert("✅ Data berhasil disimpan ke GitHub!");
+  // Simpan data ke GitHub
+const result = await res.json();
+console.log("GitHub update result:", result);
+alert("✅ Data berhasil disimpan ke GitHub!");
 }
 
+// Load data dari GitHub
 async function loadFromGitHubFile() {
-  const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
-    headers: { Authorization: `Bearer ${token}` }
-  });
-  const fileData = await res.json();
-  const content = JSON.parse(decodeURIComponent(escape(atob(fileData.content))));
-  data = content;
-  renderTable();
+  try {
+    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    const fileData = await res.json();
+
+    if (fileData && fileData.content) {
+      const decodedContent = atob(fileData.content.replace(/\n/g, ''));
+      const content = JSON.parse(decodedContent);
+      data = content;
+      renderTable();
+    } else {
+      console.error("❌ Gagal load data dari GitHub:", fileData);
+      alert("Gagal load data dari GitHub. Pastikan token valid dan file data.json sudah ada.");
+    }
+  } catch (error) {
+    console.error("❌ Error saat load data:", error);
+    alert("Terjadi error saat load data. Cek koneksi dan token GitHub.");
+  }
 }
 
-loadFromGitHubFile(); // Load saat halaman dibuka
+// Load data saat halaman dibuka
+loadFromGitHubFile();
