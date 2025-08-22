@@ -4,9 +4,18 @@ let data = {
 };
 
 // ====== CONFIG ======
-const token = "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"; // Personal Access Token GitHub
-const owner = "endboedy";
-const repo = "EM-Compoenent"; // Pastikan tidak typo
+
+// 1️⃣ Masukkan token GitHub kamu di sini (classic token)
+const token = "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";
+
+// 2️⃣ Masukkan owner repo GitHub
+const owner = "endboedy"; // ganti dengan username pemilik repo
+
+// 3️⃣ Masukkan nama repo
+const repo = "EM-Compoenent"; // ganti dengan nama repo
+
+// 4️⃣ Masukkan path file di repo
+// Contoh: "data.json" jika file ada di root repo
 const path = "data.json";
 
 // ====== MENU ======
@@ -109,8 +118,9 @@ function saveComponent(index) {
 // ====== SAVE TO GITHUB ======
 async function saveToGitHubFile() {
   try {
+    // Ambil sha file dari GitHub
     const getRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: `token ${token}` }
     });
 
     if (!getRes.ok) throw new Error(`GitHub GET error: ${getRes.status} ${getRes.statusText}`);
@@ -118,11 +128,12 @@ async function saveToGitHubFile() {
     const fileData = await getRes.json();
     const sha = fileData.sha;
 
+    // Encode JSON ke base64
     const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
     const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
       method: "PUT",
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `token ${token}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
@@ -145,23 +156,17 @@ async function saveToGitHubFile() {
 // ====== LOAD FROM GITHUB ======
 async function loadFromGitHubFile() {
   try {
-    // Debug: pastikan variabel benar
     console.log("🔹 owner:", owner, "repo:", repo, "path:", path, "token:", token ? "ada" : "tidak ada");
 
-    // Fetch file dari GitHub
     const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
       headers: token ? { Authorization: `token ${token}` } : undefined
     });
 
-    // Jika status bukan 200 OK
-    if (!res.ok) {
-      throw new Error(`GitHub GET error: ${res.status} ${res.statusText}`);
-    }
+    if (!res.ok) throw new Error(`GitHub GET error: ${res.status} ${res.statusText}`);
 
     const fileData = await res.json();
 
     if (fileData.content) {
-      // Decode base64 dan parse JSON
       const decodedContent = atob(fileData.content.replace(/\n/g, ''));
       data = JSON.parse(decodedContent);
 
