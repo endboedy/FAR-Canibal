@@ -4,6 +4,11 @@ let data = {
   current_smu: {}
 };
 
+const token = "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"; // Ganti dengan token kamu
+const owner = "endboedy";
+const repo = "EM-Compoenent";
+const path = "data.json";
+
 function showMenu(menu) {
   document.getElementById('monitoring').style.display = menu === 'monitoring' ? 'block' : 'none';
   document.getElementById('smu').style.display = menu === 'smu' ? 'block' : 'none';
@@ -63,7 +68,11 @@ function renderTable() {
         <td><input value="${c.rating}" onchange="editComponent(${index}, 'rating', this.value)"></td>
         <td><input type="file" onchange="uploadFoto(${index}, this)"></td>
         <td><input value="${c.remarks}" onchange="editComponent(${index}, 'remarks', this.value)"></td>
-        <td><button onclick="saveComponent(${index})">Save</button></td>
+        <td>
+          <button onclick="saveComponent(${index})">Save</button>
+          <button onclick="editComponent(${index})">Edit</button>
+          <button onclick="deleteComponent(${index})">Delete</button>
+        </td>
       </tr>
     `;
     tbody.innerHTML += row;
@@ -71,8 +80,17 @@ function renderTable() {
 }
 
 function editComponent(index, field, value) {
-  data.components[index][field] = value;
+  if (field && value !== undefined) {
+    data.components[index][field] = value;
+  }
   renderTable();
+}
+
+function deleteComponent(index) {
+  if (confirm("Yakin ingin menghapus komponen ini?")) {
+    data.components.splice(index, 1);
+    renderTable();
+  }
 }
 
 function uploadFoto(index, input) {
@@ -87,11 +105,6 @@ function saveComponent(index) {
 }
 
 async function saveToGitHubFile() {
-  const token = "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"; // Ganti dengan token kamu
-  const owner = "endboedy"; // Ganti dengan username GitHub kamu
-  const repo = "EM-Compoenent"; // Ganti dengan nama repo kamu
-  const path = "data.json";
-
   const getRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
     headers: { Authorization: `Bearer ${token}` }
   });
@@ -117,4 +130,14 @@ async function saveToGitHubFile() {
   alert("✅ Data berhasil disimpan ke GitHub!");
 }
 
-renderTable();
+async function loadFromGitHubFile() {
+  const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  const fileData = await res.json();
+  const content = JSON.parse(decodeURIComponent(escape(atob(fileData.content))));
+  data = content;
+  renderTable();
+}
+
+loadFromGitHubFile(); // Load saat halaman dibuka
