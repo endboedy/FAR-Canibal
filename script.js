@@ -4,7 +4,7 @@ let data = {
 };
 
 // ====== CONFIG ======
-const token = "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"; // Personal Access Token GitHub
+const token = "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"; // Personal Access Token GitHub
 const owner = "endboedy";
 const repo = "EM-Compoenent"; // Pastikan tidak typo
 const path = "data.json";
