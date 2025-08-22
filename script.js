@@ -88,3 +88,6 @@ function saveComponent(index) {
 }
 
 renderTable();
+
+
+<button onclick="saveToGitHubFile()">💾 Save All to GitHub</button>
