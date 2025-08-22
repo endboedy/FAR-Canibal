@@ -6,7 +6,7 @@ let data = {
 // ====== CONFIG ======
 const token = "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"; // Personal Access Token GitHub
 const owner = "endboedy";
-const repo = "EM-Compoenent"; // pastikan tidak typo
+const repo = "EM-Compoenent"; // Pastikan tidak typo
 const path = "data.json";
 
 // ====== MENU ======
@@ -134,8 +134,8 @@ async function saveToGitHubFile() {
 
     const result = await res.json();
     if (!res.ok) throw new Error(`GitHub PUT error: ${res.status} ${res.statusText}`);
-    console.log("GitHub update result:", result);
-    alert("✅ Data berhasil disimpan ke GitHub!");
+    console.log("✅ GitHub update result:", result);
+    alert("Data berhasil disimpan ke GitHub!");
   } catch (error) {
     console.error("❌ Gagal save ke GitHub:", error);
     alert(`Gagal save ke GitHub: ${error.message}`);
@@ -146,7 +146,7 @@ async function saveToGitHubFile() {
 async function loadFromGitHubFile() {
   try {
     const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
-      headers: { Authorization: token ? `Bearer ${token}` : undefined }
+      headers: token ? { Authorization: `Bearer ${token}` } : undefined
     });
 
     if (!res.ok) throw new Error(`GitHub GET error: ${res.status} ${res.statusText}`);
@@ -156,8 +156,9 @@ async function loadFromGitHubFile() {
       const decodedContent = atob(fileData.content.replace(/\n/g, ''));
       data = JSON.parse(decodedContent);
       renderTable();
+      console.log("✅ Data berhasil dimuat dari GitHub");
     } else {
-      console.warn("File kosong atau tidak ditemukan di GitHub:", fileData);
+      console.warn("⚠️ File kosong atau tidak ditemukan di GitHub:", fileData);
       alert("Gagal load data. Pastikan file data.json ada di repo.");
     }
   } catch (error) {
