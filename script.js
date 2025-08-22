@@ -1,19 +1,21 @@
-
 let data = {
   components: [],
   current_smu: {}
 };
 
-const token = "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"; // Ganti dengan token kamu
+// ====== CONFIG ======
+const token = "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"; // Personal Access Token GitHub
 const owner = "endboedy";
-const repo = "EM-Compoenent";
+const repo = "EM-Compoenent"; // pastikan tidak typo
 const path = "data.json";
 
+// ====== MENU ======
 function showMenu(menu) {
   document.getElementById('monitoring').style.display = menu === 'monitoring' ? 'block' : 'none';
   document.getElementById('smu').style.display = menu === 'smu' ? 'block' : 'none';
 }
 
+// ====== TAMBAH COMPONENT ======
 function addNewComponent() {
   const newComponent = {
     equipment: "",
@@ -32,19 +34,19 @@ function addNewComponent() {
   renderTable();
 }
 
+// ====== UPDATE SMU ======
 function updateSMU(event) {
   event.preventDefault();
   const equipment = document.getElementById('equipmentInput').value;
   const smu = parseInt(document.getElementById('smuInput').value);
   data.current_smu[equipment] = smu;
   data.components.forEach(c => {
-    if (c.equipment === equipment) {
-      c.smu = smu;
-    }
+    if (c.equipment === equipment) c.smu = smu;
   });
   renderTable();
 }
 
+// ====== RENDER TABLE ======
 function renderTable() {
   const tbody = document.querySelector("#componentTable tbody");
   tbody.innerHTML = "";
@@ -79,13 +81,13 @@ function renderTable() {
   });
 }
 
+// ====== EDIT COMPONENT ======
 function editComponent(index, field, value) {
-  if (field && value !== undefined) {
-    data.components[index][field] = value;
-  }
+  if (field && value !== undefined) data.components[index][field] = value;
   renderTable();
 }
 
+// ====== DELETE COMPONENT ======
 function deleteComponent(index) {
   if (confirm("Yakin ingin menghapus komponen ini?")) {
     data.components.splice(index, 1);
@@ -93,67 +95,76 @@ function deleteComponent(index) {
   }
 }
 
+// ====== UPLOAD FOTO ======
 function uploadFoto(index, input) {
   const file = input.files[0];
-  if (file) {
-    data.components[index].foto = file.name;
-  }
+  if (file) data.components[index].foto = file.name;
 }
 
+// ====== SAVE COMPONENT ======
 function saveComponent(index) {
   console.log("Component saved:", data.components[index]);
 }
 
+// ====== SAVE TO GITHUB ======
 async function saveToGitHubFile() {
-  const getRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
-    headers: { Authorization: `Bearer ${token}` }
-  });
-  const fileData = await getRes.json();
-  const sha = fileData.sha;
-
-  const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
-  const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      message: "Update data.json via Component Life EM",
-      content: content,
-      sha: sha
-    })
-  });
-
-  // Simpan data ke GitHub
-const result = await res.json();
-console.log("GitHub update result:", result);
-alert("✅ Data berhasil disimpan ke GitHub!");
-}
-
-// Load data dari GitHub
-async function loadFromGitHubFile() {
   try {
-    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+    const getRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
 
-    const fileData = await res.json();
+    if (!getRes.ok) throw new Error(`GitHub GET error: ${getRes.status} ${getRes.statusText}`);
 
-    if (fileData && fileData.content) {
-      const decodedContent = atob(fileData.content.replace(/\n/g, ''));
-      const content = JSON.parse(decodedContent);
-      data = content;
-      renderTable();
-    } else {
-      console.error("❌ Gagal load data dari GitHub:", fileData);
-      alert("Gagal load data dari GitHub. Pastikan token valid dan file data.json sudah ada.");
-    }
+    const fileData = await getRes.json();
+    const sha = fileData.sha;
+
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: "Update data.json via Component Life EM",
+        content: content,
+        sha: sha
+      })
+    });
+
+    const result = await res.json();
+    if (!res.ok) throw new Error(`GitHub PUT error: ${res.status} ${res.statusText}`);
+    console.log("GitHub update result:", result);
+    alert("✅ Data berhasil disimpan ke GitHub!");
   } catch (error) {
-    console.error("❌ Error saat load data:", error);
-    alert("Terjadi error saat load data. Cek koneksi dan token GitHub.");
+    console.error("❌ Gagal save ke GitHub:", error);
+    alert(`Gagal save ke GitHub: ${error.message}`);
   }
 }
 
-// Load data saat halaman dibuka
+// ====== LOAD FROM GITHUB ======
+async function loadFromGitHubFile() {
+  try {
+    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+      headers: { Authorization: token ? `Bearer ${token}` : undefined }
+    });
+
+    if (!res.ok) throw new Error(`GitHub GET error: ${res.status} ${res.statusText}`);
+
+    const fileData = await res.json();
+    if (fileData.content) {
+      const decodedContent = atob(fileData.content.replace(/\n/g, ''));
+      data = JSON.parse(decodedContent);
+      renderTable();
+    } else {
+      console.warn("File kosong atau tidak ditemukan di GitHub:", fileData);
+      alert("Gagal load data. Pastikan file data.json ada di repo.");
+    }
+  } catch (error) {
+    console.error("❌ Error saat load data:", error);
+    alert(`Terjadi error saat load data: ${error.message}`);
+  }
+}
+
+// ====== LOAD DATA SAAT HALAMAN DIBUKA ======
 loadFromGitHubFile();
