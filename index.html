@@ -4,121 +4,56 @@
   <meta charset="UTF-8">
   <title>📑 FAR & CANIBAL</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f5f6fa;
-    }
+    body { font-family: Arial, sans-serif; margin:0; background:#f5f6fa; }
     header {
-      background: #34495e;
-      color: white;
-      padding: 10px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      background:#34495e; color:white; padding:10px 20px;
+      display:flex; align-items:center; justify-content:space-between;
     }
-    header h1 {
-      margin: 0;
-      font-size: 18px;
-    }
-    .tabs {
-      display: flex;
-      gap: 6px;
-    }
+    header h1 { margin:0; font-size:18px; }
+    .tabs { display:flex; gap:6px; }
     .tabs button {
-      padding: 6px 12px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 13px;
-      background: #2c3e50;
-      color: #fff;
+      padding:6px 12px; border:none; border-radius:4px;
+      cursor:pointer; font-size:13px; background:#2c3e50; color:#fff;
     }
-    .tabs button.active {
-      background: #1abc9c;
-      font-weight: bold;
-    }
+    .tabs button.active { background:#1abc9c; font-weight:bold; }
     .container {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 20px;
-      padding: 15px;
-      height: calc(100vh - 60px);
-      box-sizing: border-box;
+      display:grid; grid-template-columns:1fr 2fr; gap:20px;
+      padding:15px; height:calc(100vh - 60px); box-sizing:border-box;
     }
     .card {
-      background: white;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-      display: flex;
-      flex-direction: column;
+      background:white; padding:15px; border-radius:8px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.08);
+      display:flex; flex-direction:column;
     }
-    .card h2 {
-      margin: 0 0 10px;
-      font-size: 15px;
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 6px;
-    }
+    .card h2 { margin:0 0 10px; font-size:15px; border-bottom:1px solid #ddd; padding-bottom:6px; }
     form input, form textarea, form button {
-      width: 100%;
-      padding: 7px;
-      margin-bottom: 8px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      font-size: 13px;
-      box-sizing: border-box;
+      width:100%; padding:7px; margin-bottom:8px; border-radius:5px;
+      border:1px solid #ccc; font-size:13px; box-sizing:border-box;
     }
-    form button {
-      background: #34495e;
-      color: white;
-      border: none;
-      cursor: pointer;
+    form button { background:#34495e; color:white; border:none; cursor:pointer; }
+    form button:hover { background:#2c3e50; }
+    .tools { margin-bottom:8px; }
+    .tools button {
+      margin-right:5px; padding:4px 8px; font-size:12px;
+      border:none; border-radius:4px; cursor:pointer; color:white;
     }
-    form button:hover { background: #2c3e50; }
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      font-size: 12px;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 6px;
-      text-align: left;
-    }
-    th {
-      background: #34495e;
-      color: white;
-      position: sticky;
-      top: 0;
-      z-index: 1;
-    }
-    .table-wrapper {
-      flex: 1;
-      overflow-y: auto;
-    }
-    .thumbnail {
-      max-width: 50px;
-      max-height: 40px;
-      border-radius: 4px;
-    }
-    .pdf-icon {
-      font-size: 13px;
-      color: #e74c3c;
-      font-weight: bold;
-    }
+    .export-json { background:#16a34a; }
+    .import-json { background:#2563eb; }
+    .export-csv { background:#9333ea; }
+    .clear-btn { background:#e11d48; }
+    table { border-collapse:collapse; width:100%; font-size:12px; }
+    th,td { border:1px solid #ddd; padding:6px; text-align:left; }
+    th { background:#34495e; color:white; position:sticky; top:0; z-index:1; }
+    .table-wrapper { flex:1; overflow-y:auto; }
+    .thumbnail { max-width:50px; max-height:40px; border-radius:4px; }
+    .pdf-icon { font-size:13px; color:#e74c3c; font-weight:bold; }
     .actions button {
-      margin: 1px;
-      padding: 3px 6px;
-      font-size: 11px;
-      border-radius: 4px;
-      border: none;
-      cursor: pointer;
-      color: white;
+      margin:1px; padding:3px 6px; font-size:11px; border-radius:4px;
+      border:none; cursor:pointer; color:white;
     }
-    .view-btn { background: #3498db; }
-    .download-btn { background: #9b59b6; }
-    .delete-btn { background: #e74c3c; }
+    .view-btn { background:#3498db; }
+    .download-btn { background:#9b59b6; }
+    .delete-btn { background:#e74c3c; }
   </style>
 </head>
 <body>
@@ -147,12 +82,16 @@
       </div>
       <div class="card">
         <h2>Data FAR</h2>
+        <div class="tools">
+          <button class="export-json" onclick="exportData('far','json')">Export JSON</button>
+          <button class="import-json" onclick="importData('far')">Import JSON</button>
+          <button class="export-csv" onclick="exportData('far','csv')">Export CSV</button>
+          <button class="clear-btn" onclick="clearData('far')">Clear All</button>
+        </div>
         <div class="table-wrapper">
           <table>
             <thead>
-              <tr>
-                <th>No</th><th>Equipment</th><th>Description</th><th>Date</th><th>PIC</th><th>Remarks</th><th>Picture</th><th>Actions</th>
-              </tr>
+              <tr><th>No</th><th>Equipment</th><th>Description</th><th>Date</th><th>PIC</th><th>Remarks</th><th>Picture</th><th>Actions</th></tr>
             </thead>
             <tbody id="farTableBody"></tbody>
           </table>
@@ -180,12 +119,16 @@
       </div>
       <div class="card">
         <h2>Data Canibal</h2>
+        <div class="tools">
+          <button class="export-json" onclick="exportData('canibal','json')">Export JSON</button>
+          <button class="import-json" onclick="importData('canibal')">Import JSON</button>
+          <button class="export-csv" onclick="exportData('canibal','csv')">Export CSV</button>
+          <button class="clear-btn" onclick="clearData('canibal')">Clear All</button>
+        </div>
         <div class="table-wrapper">
           <table>
             <thead>
-              <tr>
-                <th>No</th><th>Equipment</th><th>Part Desc</th><th>Qty</th><th>Equip Canibal</th><th>Date</th><th>PIC</th><th>Remarks</th><th>Document</th><th>Actions</th>
-              </tr>
+              <tr><th>No</th><th>Equipment</th><th>Part Desc</th><th>Qty</th><th>Equip Canibal</th><th>Date</th><th>PIC</th><th>Remarks</th><th>Document</th><th>Actions</th></tr>
             </thead>
             <tbody id="canibalTableBody"></tbody>
           </table>
@@ -194,152 +137,128 @@
     </div>
   </div>
 
-  <script>
-    // Switch tabs
-    function switchTab(tab) {
-      document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
-      document.getElementById('tab-' + tab).style.display = 'block';
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      event.target.classList.add('active');
+<script>
+  function switchTab(tab) {
+    document.querySelectorAll('.tab-content').forEach(c => c.style.display='none');
+    document.getElementById('tab-'+tab).style.display='block';
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+  function renderFile(item) {
+    if (!item.file) return '';
+    return item.fileName.toLowerCase().endsWith('.pdf') ?
+      `<span class="pdf-icon">📄 PDF</span>` : `<img src="${item.file}" class="thumbnail">`;
+  }
+  function viewFile(file,name){
+    if(!file) return;
+    let w=window.open("");
+    if(name.toLowerCase().endsWith('.pdf')) {
+      w.document.write(`<embed src="${file}" type="application/pdf" width="100%" height="100%">`);
+    } else { w.document.write(`<img src="${file}" style="max-width:100%">`);}
+  }
+  function downloadFile(file,name){
+    let a=document.createElement("a"); a.href=file; a.download=name; a.click();
+  }
+  function deleteRow(type,i){
+    let key=type==="far"?"FAR_Data":"CANIBAL_Data";
+    let records=JSON.parse(localStorage.getItem(key)||"[]");
+    records.splice(i,1); localStorage.setItem(key,JSON.stringify(records));
+    type==="far"?renderFAR():renderCanibal();
+  }
+  // FAR
+  let farRecords=JSON.parse(localStorage.getItem("FAR_Data")||"[]");
+  function renderFAR(){
+    let tbody=document.getElementById("farTableBody"); tbody.innerHTML="";
+    farRecords.forEach((r,i)=>{
+      tbody.innerHTML+=`
+      <tr>
+        <td>${i+1}</td><td>${r.equipment}</td><td>${r.desc||""}</td><td>${r.date}</td>
+        <td>${r.pic||""}</td><td>${r.remark||""}</td><td>${renderFile(r)}</td>
+        <td>
+          <button class="view-btn" onclick="viewFile('${r.file}','${r.fileName}')">View</button>
+          <button class="download-btn" onclick="downloadFile('${r.file}','${r.fileName}')">Download</button>
+          <button class="delete-btn" onclick="deleteRow('far',${i})">Delete</button>
+        </td>
+      </tr>`; });
+  }
+  document.getElementById("farForm").addEventListener("submit",e=>{
+    e.preventDefault(); let obj={
+      equipment:far_equipment.value, desc:far_desc.value, date:far_date.value,
+      pic:far_pic.value, remark:far_remark.value
+    }; let file=far_file.files[0];
+    if(file){let reader=new FileReader(); reader.onload=ev=>{
+      obj.file=ev.target.result; obj.fileName=file.name;
+      farRecords.push(obj); localStorage.setItem("FAR_Data",JSON.stringify(farRecords));
+      renderFAR(); e.target.reset(); }; reader.readAsDataURL(file);}
+    else{farRecords.push(obj); localStorage.setItem("FAR_Data",JSON.stringify(farRecords));
+      renderFAR(); e.target.reset();}
+  });
+  // Canibal
+  let canibalRecords=JSON.parse(localStorage.getItem("CANIBAL_Data")||"[]");
+  function renderCanibal(){
+    let tbody=document.getElementById("canibalTableBody"); tbody.innerHTML="";
+    canibalRecords.forEach((r,i)=>{
+      tbody.innerHTML+=`
+      <tr>
+        <td>${i+1}</td><td>${r.equipment}</td><td>${r.part}</td><td>${r.qty}</td><td>${r.from}</td>
+        <td>${r.date}</td><td>${r.pic||""}</td><td>${r.remark||""}</td><td>${renderFile(r)}</td>
+        <td>
+          <button class="view-btn" onclick="viewFile('${r.file}','${r.fileName}')">View</button>
+          <button class="download-btn" onclick="downloadFile('${r.file}','${r.fileName}')">Download</button>
+          <button class="delete-btn" onclick="deleteRow('canibal',${i})">Delete</button>
+        </td>
+      </tr>`; });
+  }
+  document.getElementById("canibalForm").addEventListener("submit",e=>{
+    e.preventDefault(); let obj={
+      equipment:can_equipment.value, part:can_part.value, qty:can_qty.value,
+      from:can_from.value, date:can_date.value, pic:can_pic.value, remark:can_remark.value
+    }; let file=can_file.files[0];
+    if(file){let reader=new FileReader(); reader.onload=ev=>{
+      obj.file=ev.target.result; obj.fileName=file.name;
+      canibalRecords.push(obj); localStorage.setItem("CANIBAL_Data",JSON.stringify(canibalRecords));
+      renderCanibal(); e.target.reset(); }; reader.readAsDataURL(file);}
+    else{canibalRecords.push(obj); localStorage.setItem("CANIBAL_Data",JSON.stringify(canibalRecords));
+      renderCanibal(); e.target.reset();}
+  });
+  // Export / Import / Clear
+  function exportData(type,format){
+    let key=type==="far"?"FAR_Data":"CANIBAL_Data";
+    let data=localStorage.getItem(key)||"[]";
+    if(format==="json"){
+      let blob=new Blob([data],{type:"application/json"});
+      let a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+      a.download=key+".json"; a.click();
+    } else { // CSV
+      let arr=JSON.parse(data); if(!arr.length) return;
+      let headers=Object.keys(arr[0]); let csv=headers.join(",")+"\n";
+      arr.forEach(r=>{csv+=headers.map(h=>JSON.stringify(r[h]||"")).join(",")+"\n";});
+      let blob=new Blob([csv],{type:"text/csv"});
+      let a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+      a.download=key+".csv"; a.click();
     }
-
-    // Helpers
-    function renderFile(item) {
-      if (!item.file) return '';
-      if (item.fileName.toLowerCase().endsWith('.pdf')) {
-        return `<span class="pdf-icon">📄 PDF</span>`;
-      } else {
-        return `<img src="${item.file}" class="thumbnail">`;
-      }
+  }
+  function importData(type){
+    let key=type==="far"?"FAR_Data":"CANIBAL_Data";
+    let input=document.createElement("input"); input.type="file"; input.accept=".json";
+    input.onchange=e=>{
+      let file=e.target.files[0]; if(!file) return;
+      let reader=new FileReader(); reader.onload=ev=>{
+        localStorage.setItem(key,ev.target.result);
+        if(type==="far"){farRecords=JSON.parse(ev.target.result); renderFAR();}
+        else{canibalRecords=JSON.parse(ev.target.result); renderCanibal();}
+      }; reader.readAsText(file);
+    }; input.click();
+  }
+  function clearData(type){
+    let key=type==="far"?"FAR_Data":"CANIBAL_Data";
+    if(confirm("Yakin hapus semua data "+type.toUpperCase()+" ?")){
+      localStorage.removeItem(key);
+      if(type==="far"){farRecords=[]; renderFAR();} else {canibalRecords=[]; renderCanibal();}
     }
-    function viewFile(file, name) {
-      if (name.toLowerCase().endsWith('.pdf')) {
-        let w = window.open("");
-        w.document.write(`<embed src="${file}" type="application/pdf" width="100%" height="100%">`);
-      } else {
-        let w = window.open("");
-        w.document.write(`<img src="${file}" style="max-width:100%">`);
-      }
-    }
-    function downloadFile(file, name) {
-      let a = document.createElement("a");
-      a.href = file;
-      a.download = name;
-      a.click();
-    }
-
-    // FAR
-    let farRecords = JSON.parse(localStorage.getItem("FAR_Data")||"[]");
-    function renderFAR() {
-      let tbody = document.getElementById("farTableBody");
-      tbody.innerHTML = "";
-      farRecords.forEach((r,i) => {
-        tbody.innerHTML += `
-          <tr>
-            <td>${i+1}</td><td>${r.equipment}</td><td>${r.desc||""}</td><td>${r.date}</td>
-            <td>${r.pic||""}</td><td>${r.remark||""}</td><td>${renderFile(r)}</td>
-            <td>
-              <button class="actions view-btn" onclick="viewFile('${r.file}','${r.fileName}')">View</button>
-              <button class="actions download-btn" onclick="downloadFile('${r.file}','${r.fileName}')">Download</button>
-              <button class="actions delete-btn" onclick="deleteRow('far',${i})">Delete</button>
-            </td>
-          </tr>`;
-      });
-    }
-    document.getElementById("farForm").addEventListener("submit", e=>{
-      e.preventDefault();
-      let obj = {
-        equipment: document.getElementById("far_equipment").value,
-        desc: document.getElementById("far_desc").value,
-        date: document.getElementById("far_date").value,
-        pic: document.getElementById("far_pic").value,
-        remark: document.getElementById("far_remark").value
-      };
-      let file = document.getElementById("far_file").files[0];
-      if (file) {
-        let reader = new FileReader();
-        reader.onload = ev=>{
-          obj.file = ev.target.result;
-          obj.fileName = file.name;
-          farRecords.push(obj);
-          localStorage.setItem("FAR_Data", JSON.stringify(farRecords));
-          renderFAR();
-          e.target.reset();
-        };
-        reader.readAsDataURL(file);
-      } else {
-        farRecords.push(obj);
-        localStorage.setItem("FAR_Data", JSON.stringify(farRecords));
-        renderFAR();
-        e.target.reset();
-      }
-    });
-
-    // Canibal
-    let canibalRecords = JSON.parse(localStorage.getItem("CANIBAL_Data")||"[]");
-    function renderCanibal() {
-      let tbody = document.getElementById("canibalTableBody");
-      tbody.innerHTML = "";
-      canibalRecords.forEach((r,i) => {
-        tbody.innerHTML += `
-          <tr>
-            <td>${i+1}</td><td>${r.equipment}</td><td>${r.part}</td><td>${r.qty}</td><td>${r.from}</td>
-            <td>${r.date}</td><td>${r.pic||""}</td><td>${r.remark||""}</td><td>${renderFile(r)}</td>
-            <td>
-              <button class="actions view-btn" onclick="viewFile('${r.file}','${r.fileName}')">View</button>
-              <button class="actions download-btn" onclick="downloadFile('${r.file}','${r.fileName}')">Download</button>
-              <button class="actions delete-btn" onclick="deleteRow('canibal',${i})">Delete</button>
-            </td>
-          </tr>`;
-      });
-    }
-    document.getElementById("canibalForm").addEventListener("submit", e=>{
-      e.preventDefault();
-      let obj = {
-        equipment: document.getElementById("can_equipment").value,
-        part: document.getElementById("can_part").value,
-        qty: document.getElementById("can_qty").value,
-        from: document.getElementById("can_from").value,
-        date: document.getElementById("can_date").value,
-        pic: document.getElementById("can_pic").value,
-        remark: document.getElementById("can_remark").value
-      };
-      let file = document.getElementById("can_file").files[0];
-      if (file) {
-        let reader = new FileReader();
-        reader.onload = ev=>{
-          obj.file = ev.target.result;
-          obj.fileName = file.name;
-          canibalRecords.push(obj);
-          localStorage.setItem("CANIBAL_Data", JSON.stringify(canibalRecords));
-          renderCanibal();
-          e.target.reset();
-        };
-        reader.readAsDataURL(file);
-      } else {
-        canibalRecords.push(obj);
-        localStorage.setItem("CANIBAL_Data", JSON.stringify(canibalRecords));
-        renderCanibal();
-        e.target.reset();
-      }
-    });
-
-    // Delete row
-    function deleteRow(type, idx) {
-      if (type==="far") {
-        farRecords.splice(idx,1);
-        localStorage.setItem("FAR_Data", JSON.stringify(farRecords));
-        renderFAR();
-      } else {
-        canibalRecords.splice(idx,1);
-        localStorage.setItem("CANIBAL_Data", JSON.stringify(canibalRecords));
-        renderCanibal();
-      }
-    }
-
-    // Init
-    renderFAR();
-    renderCanibal();
-  </script>
+  }
+  // Init
+  renderFAR(); renderCanibal();
+</script>
 </body>
 </html>
