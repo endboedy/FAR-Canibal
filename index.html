@@ -50,7 +50,6 @@
     <div class="tabs">
       <button class="tab-btn active" onclick="switchTab('far')">Summary FAR</button>
       <button class="tab-btn" onclick="switchTab('canibal')">Canibal</button>
-      <button class="tab-btn" onclick="switchTab('damage')">Damage</button>
     </div>
   </header>
 
@@ -99,7 +98,6 @@
         <h2 id="canibalFormTitle">Tambah Canibal</h2>
         <form id="canibalForm">
           <input type="text" id="can_equipment" placeholder="Equipment" required>
-          <input type="text" id="can_partn" placeholder="Part Number" required>
           <input type="text" id="can_part" placeholder="Part Desc" required>
           <input type="number" id="can_qty" placeholder="Qty" required>
           <input type="text" id="can_from" placeholder="Equip Canibal" required>
@@ -124,7 +122,7 @@
         <div class="table-wrapper">
           <table>
             <thead>
-              <tr><th>No</th><th>Equipment</th><th>Part Number</th><th>Part Desc</th><th>Qty</th><th>Equip Canibal</th><th>Date</th><th>PIC</th><th>Remarks</th><th>Status</th><th>Document</th><th>Actions</th></tr>
+              <tr><th>No</th><th>Equipment</th><th>Part Desc</th><th>Qty</th><th>Equip Canibal</th><th>Date</th><th>PIC</th><th>Remarks</th><th>Status</th><th>Document</th><th>Actions</th></tr>
             </thead>
             <tbody id="canibalTableBody"></tbody>
           </table>
@@ -132,47 +130,6 @@
       </div>
     </div>
   </div>
-
- <!-- Damage -->
-  <div id="tab-damage" class="tab-content" style="display:none;">
-    <div class="container">
-      <div class="card">
-        <h2 id="damageFormTitle">Tambah Damage</h2>
-        <form id="damageForm">
-          <input type="text" id="can_equipment" placeholder="Equipment" required>
-          <input type="text" id="can_partn" placeholder="Part Number" required>
-          <input type="text" id="can_part" placeholder="Part Desc" required>
-          <input type="number" id="can_qty" placeholder="Qty" required>
-          <input type="date" id="can_date" required>
-          <input type="text" id="can_pic" placeholder="PIC">
-          <input type="text" id="can_remark" placeholder="Remarks">
-          <select id="can_status">
-            <option>Open</option><option>Continue</option><option>Progress</option><option>Finish</option>
-          </select>
-          <input type="file" id="can_file" accept=".png,.jpg,.jpeg,.pdf">
-          <button type="submit" id="canSubmitBtn">Simpan Canibal</button>
-        </form>
-      </div>
-      <div class="card">
-        <h2>Data Damage</h2>
-        <div class="tools">
-          <button class="export-json" onclick="exportData('damage')">Export JSON</button>
-          <button class="import-json" onclick="importData('damage')">Import JSON</button>
-          <button class="export-csv" onclick="exportCSV('damage')">Export CSV</button>
-          <button class="clear-btn" onclick="clearData('damage')">Clear All</button>
-        </div>
-        <div class="table-wrapper">
-          <table>
-            <thead>
-              <tr><th>No</th><th>Equipment</th><th>Part Number</th><th>Part Desc</th><th>Qty</th><th>Date</th><th>PIC</th><th>Remarks</th><th>Status</th><th>Document</th><th>Actions</th></tr>
-            </thead>
-            <tbody id="damageTableBody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-
 <script>
   const DB_NAME = "FAR_CANIBAL_DB", DB_VERSION = 1;
 
@@ -267,28 +224,7 @@
       await saveFileToDB(obj.fileId,ev.target.result);saveAndRender();};r.readAsDataURL(file);}
     else{saveAndRender();}});
 
-  // === Damage ===
-  let damEditIndex=null;
-  function renderDamage(){let recs=JSON.parse(localStorage.getItem("DAMAGE_Data")||"[]");
-    let tbody=document.getElementById("canibalTableBody");tbody.innerHTML="";
-    recs.forEach((r,i)=>{tbody.innerHTML+=`
-      <tr><td>${i+1}</td><td>${r.equipment}</td><td>${r.part}</td><td>${r.qty}</td><td>${r.from}</td>
-      <td>${r.date}</td><td>${r.pic||""}</td><td>${r.remark||""}</td><td>${r.status||"Open"}</td><td>${renderFileCell(r)}</td>
-      <td><button class="view-btn" onclick="viewFile('${r.fileId}','${r.fileName}')">View</button>
-      <button class="download-btn" onclick="downloadFile('${r.fileId}','${r.fileName}')">Download</button>
-      <button class="edit-btn" onclick="editRecord('canibal',${i})">Edit</button>
-      <button class="delete-btn" onclick="deleteRow('canibal',${i})">Delete</button></td></tr>`;loadThumbnail(r.fileId,r.fileName);});}
-  canibalForm.addEventListener("submit",e=>{e.preventDefault();let recs=JSON.parse(localStorage.getItem("CANIBAL_Data")||"[]");
-    let obj={equipment:can_equipment.value,part:can_part.value,qty:can_qty.value,from:can_from.value,
-      date:can_date.value,pic:can_pic.value,remark:can_remark.value,status:can_status.value,fileId:null,fileName:null};
-    let file=can_file.files[0];
-    let saveAndRender=()=>{if(canEditIndex!==null){recs[canEditIndex]=obj;canEditIndex=null;damageFormTitle.textContent="Tambah Damage";canSubmitBtn.textContent="Simpan Damage";}
-      else recs.push(obj);localStorage.setItem("DAMAGE_Data",JSON.stringify(recs));renderDamage();damageForm.reset();};
-    if(file){let r=new FileReader();r.onload=async ev=>{obj.fileId=Date.now()+"_"+file.name;obj.fileName=file.name;
-      await saveFileToDB(obj.fileId,ev.target.result);saveAndRender();};r.readAsDataURL(file);}
-    else{saveAndRender();}});
-
-  // === Edit/Delete ===
+    // === Edit/Delete ===
   function editRecord(type,i){if(type==="far"){let recs=JSON.parse(localStorage.getItem("FAR_Data")||"[]");let r=recs[i];
       far_equipment.value=r.equipment;far_desc.value=r.desc;far_date.value=r.date;far_pic.value=r.pic;
       far_remark.value=r.remark;far_status.value=r.status||"Open";farEditIndex=i;farFormTitle.textContent="Edit FAR";farSubmitBtn.textContent="Update FAR";}
@@ -318,5 +254,3 @@
 </script>
 </body>
 </html>
-
-
