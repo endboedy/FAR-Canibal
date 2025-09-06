@@ -183,7 +183,7 @@
   async function downloadFile(fileId,fileName){const d=await getFileFromDB(fileId);if(!d)return;
     let a=document.createElement("a");a.href=d;a.download=fileName;a.click();}
 
-  // === FAR ===
+   // === FAR ===
   let farEditIndex=null;
   function renderFAR(){let records=JSON.parse(localStorage.getItem("FAR_Data")||"[]");
     let tbody=document.getElementById("farTableBody");tbody.innerHTML="";
@@ -203,6 +203,7 @@
     if(file){let r=new FileReader();r.onload=async ev=>{obj.fileId=Date.now()+"_"+file.name;obj.fileName=file.name;
       await saveFileToDB(obj.fileId,ev.target.result);saveAndRender();};r.readAsDataURL(file);}
     else{saveAndRender();}});
+
 
   // === Canibal ===
   let canEditIndex=null;
@@ -255,4 +256,5 @@
 </script>
 </body>
 </html>
+
 
