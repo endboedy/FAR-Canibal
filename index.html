@@ -183,26 +183,84 @@
   async function downloadFile(fileId,fileName){const d=await getFileFromDB(fileId);if(!d)return;
     let a=document.createElement("a");a.href=d;a.download=fileName;a.click();}
 
-   // === FAR ===
-  let farEditIndex=null;
-  function renderFAR(){let records=JSON.parse(localStorage.getItem("FAR_Data")||"[]");
-    let tbody=document.getElementById("farTableBody");tbody.innerHTML="";
-    records.forEach((r,i)=>{tbody.innerHTML+=`
-      <tr><td>${i+1}</td><td>${r.equipment}</td><td>${r.desc||""}</td><td>${r.date}</td>
-      <td>${r.pic||""}</td><td>${r.remark||""}</td><td>${r.status||"Open"}</td><td>${renderFileCell(r)}</td>
-      <td><button class="view-btn" onclick="viewFile('${r.fileId}','${r.fileName}')">View</button>
-      <button class="download-btn" onclick="downloadFile('${r.fileId}','${r.fileName}')">Download</button>
-      <button class="edit-btn" onclick="editRecord('far',${i})">Edit</button>
-      <button class="delete-btn" onclick="deleteRow('far',${i})">Delete</button></td></tr>`;loadThumbnail(r.fileId,r.fileName);});}
-  farForm.addEventListener("submit",e=>{e.preventDefault();let recs=JSON.parse(localStorage.getItem("FAR_Data")||"[]");
-    let obj={equipment:far_equipment.value,desc:far_desc.value,date:far_date.value,
-      pic:far_pic.value,remark:far_remark.value,status:far_status.value,fileId:null,fileName:null};
-    let file=far_file.files[0];
-    let saveAndRender=()=>{if(farEditIndex!==null){recs[farEditIndex]=obj;farEditIndex=null;farFormTitle.textContent="Tambah FAR";farSubmitBtn.textContent="Simpan FAR";}
-      else recs.push(obj);localStorage.setItem("FAR_Data",JSON.stringify(recs));renderFAR();farForm.reset();};
-    if(file){let r=new FileReader();r.onload=async ev=>{obj.fileId=Date.now()+"_"+file.name;obj.fileName=file.name;
-      await saveFileToDB(obj.fileId,ev.target.result);saveAndRender();};r.readAsDataURL(file);}
-    else{saveAndRender();}});
+   
+ // === FAR ===
+  let farEditIndex = null;
+
+  function renderFAR() {
+    let records = JSON.parse(localStorage.getItem("FAR_Data") || "[]");
+    let tbody = document.getElementById("farTableBody");
+    tbody.innerHTML = "";
+
+    records.forEach((r, i) => {
+      tbody.innerHTML += `
+        <tr>
+          <td>${i + 1}</td>
+          <td>${r.equipment}</td>
+          <td>${r.desc || ""}</td>
+          <td>${r.date}</td>
+          <td>${r.pic || ""}</td>
+          <td>${r.remark || ""}</td>
+          <td>${r.status || "Open"}</td>
+          <td>${renderFileCell(r)}</td>
+          <td>
+            <button class="view-btn" onclick="viewFile('${r.fileId}','${r.fileName}')">View</button>
+            <button class="download-btn" onclick="downloadFile('${r.fileId}','${r.fileName}')">Download</button>
+            <button class="edit-btn" onclick="editRecord('far', ${i})">Edit</button>
+            <button class="delete-btn" onclick="deleteRow('far', ${i})">Delete</button>
+          </td>
+        </tr>
+      `;
+      loadThumbnail(r.fileId, r.fileName);
+    });
+  }
+
+  document.getElementById("farForm").addEventListener("submit", e => {
+    e.preventDefault();
+    let recs = JSON.parse(localStorage.getItem("FAR_Data") || "[]");
+
+    let obj = {
+      equipment: far_equipment.value,
+      desc: far_desc.value,
+      date: far_date.value,
+      pic: far_pic.value,
+      remark: far_remark.value,
+      status: far_status.value,
+      fileId: null,
+      fileName: null
+    };
+
+    let file = far_file.files[0];
+
+    let saveAndRender = () => {
+      if (farEditIndex !== null) {
+        recs[farEditIndex] = obj;
+        farEditIndex = null;
+        farFormTitle.textContent = "Tambah FAR";
+        farSubmitBtn.textContent = "Simpan FAR";
+      } else {
+        recs.push(obj);
+      }
+
+      localStorage.setItem("FAR_Data", JSON.stringify(recs));
+      renderFAR();
+      farForm.reset();
+    };
+
+    if (file) {
+      let reader = new FileReader();
+      reader.onload = async ev => {
+        obj.fileId = Date.now() + "_" + file.name;
+        obj.fileName = file.name;
+        await saveFileToDB(obj.fileId, ev.target.result);
+        saveAndRender();
+      };
+      reader.readAsDataURL(file);
+    } else {
+      saveAndRender();
+    }
+  });
+
 
 
   // === Canibal ===
@@ -256,5 +314,6 @@
 </script>
 </body>
 </html>
+
 
 
