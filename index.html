@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>📑 FAR & CANIBAL</title>
-  <style>
+<meta charset="utf-8"/>
+<title>📑 FAR &amp; CANIBAL</title>
+<style>
     body { font-family: Arial, sans-serif; margin:0; background:#f5f6fa; }
     header { background:#34495e; color:white; padding:10px 20px;
       display:flex; align-items:center; justify-content:space-between; }
@@ -43,94 +44,91 @@
     .edit-btn { background:#f59e0b; }
     .delete-btn { background:#e74c3c; }
   </style>
-
 </head>
 <body>
-  <header>
-    <h1>📑 FAR & CANIBAL</h1>
-    <div class="tabs">
-      <button class="tab-btn active" onclick="switchTab('far')">Summary FAR</button>
-      <button class="tab-btn" onclick="switchTab('canibal')">Canibal</button>
-    </div>
-  </header>
-
-  <!-- Summary FAR -->
-  <div id="tab-far" class="tab-content">
-    <div class="container">
-      <div class="card">
-        <h2 id="farFormTitle">Tambah FAR</h2>
-        <form id="farForm">
-          <input type="text" id="far_equipment" placeholder="Equipment" required>
-          <textarea id="far_desc" placeholder="Description"></textarea>
-          <input type="date" id="far_date" required>
-          <input type="text" id="far_pic" placeholder="PIC">
-          <input type="text" id="far_remark" placeholder="Remarks">
-          <select id="far_status">
-            <option>Open</option><option>Continue</option><option>Progress</option><option>Finish</option>
-          </select>
-          <input type="file" id="far_file" accept=".png,.jpg,.jpeg,.pdf">
-          <button type="submit" id="farSubmitBtn">Simpan FAR</button>
-        </form>
-      </div>
-      <div class="card">
-        <h2>Data FAR</h2>
-        <div class="tools">
-          <button class="export-json" onclick="exportData('far')">Export JSON</button>
-          <button class="import-json" onclick="importData('far')">Import JSON</button>
-          <button class="export-csv" onclick="exportCSV('far')">Export CSV</button>
-          <button class="clear-btn" onclick="clearData('far')">Clear All</button>
-        </div>
-        <div class="table-wrapper">
-          <table>
-            <thead>
-              <tr><th>No</th><th>Equipment</th><th>Description</th><th>Date</th><th>PIC</th><th>Remarks</th><th>Status</th><th>Picture</th><th>Actions</th></tr>
-            </thead>
-            <tbody id="farTableBody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Canibal -->
-  <div id="tab-canibal" class="tab-content" style="display:none;">
-    <div class="container">
-      <div class="card">
-        <h2 id="canibalFormTitle">Tambah Canibal</h2>
-        <form id="canibalForm">
-          <input type="text" id="can_equipment" placeholder="Equipment" required>
-          <input type="text" id="can_part" placeholder="Part Desc" required>
-          <input type="number" id="can_qty" placeholder="Qty" required>
-          <input type="text" id="can_from" placeholder="Equip Canibal" required>
-          <input type="date" id="can_date" required>
-          <input type="text" id="can_pic" placeholder="PIC">
-          <input type="text" id="can_remark" placeholder="Remarks">
-          <select id="can_status">
-            <option>Open</option><option>Continue</option><option>Progress</option><option>Finish</option>
-          </select>
-          <input type="file" id="can_file" accept=".png,.jpg,.jpeg,.pdf">
-          <button type="submit" id="canSubmitBtn">Simpan Canibal</button>
-        </form>
-      </div>
-      <div class="card">
-        <h2>Data Canibal</h2>
-        <div class="tools">
-          <button class="export-json" onclick="exportData('canibal')">Export JSON</button>
-          <button class="import-json" onclick="importData('canibal')">Import JSON</button>
-          <button class="export-csv" onclick="exportCSV('canibal')">Export CSV</button>
-          <button class="clear-btn" onclick="clearData('canibal')">Clear All</button>
-        </div>
-        <div class="table-wrapper">
-          <table>
-            <thead>
-              <tr><th>No</th><th>Equipment</th><th>Part Desc</th><th>Qty</th><th>Equip Canibal</th><th>Date</th><th>PIC</th><th>Remarks</th><th>Status</th><th>Document</th><th>Actions</th></tr>
-            </thead>
-            <tbody id="canibalTableBody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
+<header>
+<h1>📑 FAR &amp; CANIBAL</h1>
+<div class="tabs">
+<button class="tab-btn active" onclick="switchTab('far')">Summary FAR</button>
+<button class="tab-btn" onclick="switchTab('canibal')">Canibal</button>
+</div>
+</header>
+<!-- Summary FAR -->
+<div class="tab-content" id="tab-far">
+<div class="container">
+<div class="card">
+<h2 id="farFormTitle">Tambah FAR</h2>
+<form id="farForm">
+<input id="far_equipment" placeholder="Equipment" required="" type="text"/>
+<textarea id="far_desc" placeholder="Description"></textarea>
+<input id="far_date" required="" type="date"/>
+<input id="far_pic" placeholder="PIC" type="text"/>
+<input id="far_remark" placeholder="Remarks" type="text"/>
+<select id="far_status">
+<option>Open</option><option>Continue</option><option>Progress</option><option>Finish</option>
+</select>
+<input accept=".png,.jpg,.jpeg,.pdf" id="far_file" type="file"/>
+<button id="farSubmitBtn" type="submit">Simpan FAR</button>
+</form>
+</div>
+<div class="card">
+<h2>Data FAR</h2>
+<div class="tools">
+<button class="export-json" onclick="exportData('far')">Export JSON</button>
+<button class="import-json" onclick="importData('far')">Import JSON</button>
+<button class="export-csv" onclick="exportCSV('far')">Export CSV</button>
+<button class="clear-btn" onclick="clearData('far')">Clear All</button>
+</div>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>No</th><th>Equipment</th><th>Description</th><th>Date</th><th>PIC</th><th>Remarks</th><th>Status</th><th>Picture</th><th>Actions</th></tr>
+</thead>
+<tbody id="farTableBody"></tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<!-- Canibal -->
+<div class="tab-content" id="tab-canibal" style="display:none;">
+<div class="container">
+<div class="card">
+<h2 id="canibalFormTitle">Tambah Canibal</h2>
+<form id="canibalForm">
+<input id="can_equipment" placeholder="Equipment" required="" type="text"/>
+<input id="can_part" placeholder="Part Desc" required="" type="text"/>
+<input id="can_qty" placeholder="Qty" required="" type="number"/>
+<input id="can_from" placeholder="Equip Canibal" required="" type="text"/>
+<input id="can_date" required="" type="date"/>
+<input id="can_pic" placeholder="PIC" type="text"/>
+<input id="can_remark" placeholder="Remarks" type="text"/>
+<select id="can_status">
+<option>Open</option><option>Continue</option><option>Progress</option><option>Finish</option>
+</select>
+<input accept=".png,.jpg,.jpeg,.pdf" id="can_file" type="file"/>
+<button id="canSubmitBtn" type="submit">Simpan Canibal</button>
+</form>
+</div>
+<div class="card">
+<h2>Data Canibal</h2>
+<div class="tools">
+<button class="export-json" onclick="exportData('canibal')">Export JSON</button>
+<button class="import-json" onclick="importData('canibal')">Import JSON</button>
+<button class="export-csv" onclick="exportCSV('canibal')">Export CSV</button>
+<button class="clear-btn" onclick="clearData('canibal')">Clear All</button>
+</div>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>No</th><th>Equipment</th><th>Part Desc</th><th>Qty</th><th>Equip Canibal</th><th>Date</th><th>PIC</th><th>Remarks</th><th>Status</th><th>Document</th><th>Actions</th></tr>
+</thead>
+<tbody id="canibalTableBody"></tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
 <script>
   const DB_NAME = "FAR_CANIBAL_DB", DB_VERSION = 1;
 
@@ -312,8 +310,43 @@
   // === Init ===
   renderFAR();renderCanibal();
 </script>
-</body>
+<div id="translate-page" style="display:none;"></div><div id="save-page" style="display:none;"></div>
+<form id="formFAR">
+<input id="farEquip" placeholder="Equipment" type="text"/>
+<input id="farDesc" placeholder="Description" type="text"/>
+<input id="farDate" type="date"/>
+<input id="farPIC" placeholder="PIC" type="text"/>
+<input id="farRemarks" placeholder="Remarks" type="text"/>
+<select id="farStatus">
+<option>Open</option>
+<option>Continue</option>
+<option>Progress</option>
+<option>Finish</option>
+</select>
+<button onclick="saveFAR()" type="button">Simpan FAR</button>
+</form>
+<script>
+let farData = [];
+
+function saveFAR() {
+  const data = {
+    equipment: document.getElementById('farEquip').value,
+    description: document.getElementById('farDesc').value,
+    date: document.getElementById('farDate').value,
+    pic: document.getElementById('farPIC').value,
+    remarks: document.getElementById('farRemarks').value,
+    status: document.getElementById('farStatus').value
+  };
+  farData.push(data);
+  try {
+    localStorage.setItem('FAR_Data', JSON.stringify(farData));
+  } catch (e) {
+    if (e.name === 'QuotaExceededError') {
+      alert('Data terlalu besar untuk disimpan di localStorage. Silakan simpan ke file JSON.');
+    } else {
+      alert('Gagal menyimpan data: ' + e.message);
+    }
+  }
+}
+</script></body>
 </html>
-
-
-
