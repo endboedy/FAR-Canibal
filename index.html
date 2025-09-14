@@ -1,352 +1,352 @@
 <!DOCTYPE html>
-
 <html lang="id">
 <head>
 <meta charset="utf-8"/>
-<title>📑 FAR &amp; CANIBAL</title>
+<title>📑 FAR & CANIBAL</title>
 <style>
-    body { font-family: Arial, sans-serif; margin:0; background:#f5f6fa; }
-    header { background:#34495e; color:white; padding:10px 20px;
-      display:flex; align-items:center; justify-content:space-between; }
-    header h1 { margin:0; font-size:18px; }
-    .tabs { display:flex; gap:6px; }
-    .tabs button { padding:6px 12px; border:none; border-radius:4px; cursor:pointer;
-      font-size:13px; background:#2c3e50; color:#fff; }
-    .tabs button.active { background:#1abc9c; font-weight:bold; }
-    .container { display:grid; grid-template-columns:1fr 2fr; gap:20px;
-      padding:15px; height:calc(100vh - 60px); box-sizing:border-box; }
-    .card { background:white; padding:15px; border-radius:8px;
-      box-shadow:0 4px 10px rgba(0,0,0,0.08); display:flex; flex-direction:column; }
-    .card h2 { margin:0 0 10px; font-size:15px; border-bottom:1px solid #ddd; padding-bottom:6px; }
-    form input, form textarea, form button, form select {
-      width:100%; padding:7px; margin-bottom:8px; border-radius:5px;
-      border:1px solid #ccc; font-size:13px; box-sizing:border-box;
-    }
-    form button { background:#34495e; color:white; border:none; cursor:pointer; }
-    form button:hover { background:#2c3e50; }
-    .tools { margin-bottom:8px; }
-    .tools button { margin-right:5px; padding:4px 8px; font-size:12px;
-      border:none; border-radius:4px; cursor:pointer; color:white; }
-    .export-json { background:#16a34a; }
-    .import-json { background:#2563eb; }
-    .export-csv { background:#9333ea; }
-    .clear-btn { background:#e11d48; }
-    table { border-collapse:collapse; width:100%; font-size:12px; }
-    th,td { border:1px solid #ddd; padding:6px; text-align:left; }
-    th { background:#34495e; color:white; position:sticky; top:0; z-index:1; }
-    .table-wrapper { flex:1; overflow-y:auto; }
-    .thumbnail { max-width:50px; max-height:40px; border-radius:4px; }
-    .pdf-icon { font-size:13px; color:#e74c3c; font-weight:bold; }
-    .actions button { margin:1px; padding:3px 6px; font-size:11px; border-radius:4px;
-      border:none; cursor:pointer; color:white; }
-    .view-btn { background:#3498db; }
-    .download-btn { background:#9b59b6; }
-    .edit-btn { background:#f59e0b; }
-    .delete-btn { background:#e74c3c; }
-  </style>
+  body { font-family: Arial, sans-serif; margin:0; background:#f5f6fa; }
+  header { background:#34495e; color:white; padding:10px 20px;
+    display:flex; align-items:center; justify-content:space-between; }
+  header h1 { margin:0; font-size:18px; }
+  .tabs { display:flex; gap:6px; }
+  .tabs button { padding:6px 12px; border:none; border-radius:4px; cursor:pointer;
+    font-size:13px; background:#2c3e50; color:#fff; }
+  .tabs button.active { background:#1abc9c; font-weight:bold; }
+  .container { display:grid; grid-template-columns:1fr 2fr; gap:20px;
+    padding:15px; height:calc(100vh - 60px); box-sizing:border-box; }
+  .card { background:white; padding:15px; border-radius:8px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.08); display:flex; flex-direction:column; }
+  .card h2 { margin:0 0 10px; font-size:15px; border-bottom:1px solid #ddd; padding-bottom:6px; }
+  form input, form textarea, form button, form select {
+    width:100%; padding:7px; margin-bottom:8px; border-radius:5px;
+    border:1px solid #ccc; font-size:13px; box-sizing:border-box;
+  }
+  form button { background:#34495e; color:white; border:none; cursor:pointer; }
+  form button:hover { background:#2c3e50; }
+  .tools { margin-bottom:8px; }
+  .tools button { margin-right:5px; padding:4px 8px; font-size:12px;
+    border:none; border-radius:4px; cursor:pointer; color:white; }
+  .export-json { background:#16a34a; }
+  .import-json { background:#2563eb; }
+  .export-csv { background:#9333ea; }
+  .clear-btn { background:#e11d48; }
+  table { border-collapse:collapse; width:100%; font-size:12px; }
+  th,td { border:1px solid #ddd; padding:6px; text-align:left; }
+  th { background:#34495e; color:white; position:sticky; top:0; z-index:1; }
+  .table-wrapper { flex:1; overflow-y:auto; }
+  .thumbnail { max-width:50px; max-height:40px; border-radius:4px; }
+  .pdf-icon { font-size:13px; color:#e74c3c; font-weight:bold; }
+  .actions button { margin:1px; padding:3px 6px; font-size:11px; border-radius:4px;
+    border:none; cursor:pointer; color:white; }
+  .view-btn { background:#3498db; }
+  .download-btn { background:#9b59b6; }
+  .edit-btn { background:#f59e0b; }
+  .delete-btn { background:#e74c3c; }
+</style>
 </head>
 <body>
 <header>
-<h1>📑 FAR &amp; CANIBAL</h1>
-<div class="tabs">
-<button class="tab-btn active" onclick="switchTab('far')">Summary FAR</button>
-<button class="tab-btn" onclick="switchTab('canibal')">Canibal</button>
-</div>
+  <h1>📑 FAR & CANIBAL</h1>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('far')">Summary FAR</button>
+    <button class="tab-btn" onclick="switchTab('canibal')">Canibal</button>
+  </div>
 </header>
+
 <!-- Summary FAR -->
 <div class="tab-content" id="tab-far">
-<div class="container">
-<div class="card">
-<h2 id="farFormTitle">Tambah FAR</h2>
-<form id="farForm">
-<input id="far_equipment" placeholder="Equipment" required="" type="text"/>
-<textarea id="far_desc" placeholder="Description"></textarea>
-<input id="far_date" required="" type="date"/>
-<input id="far_pic" placeholder="PIC" type="text"/>
-<input id="far_remark" placeholder="Remarks" type="text"/>
-<select id="far_status">
-<option>Open</option><option>Continue</option><option>Progress</option><option>Finish</option>
-</select>
-<input accept=".png,.jpg,.jpeg,.pdf" id="far_file" type="file"/>
-<button id="farSubmitBtn" type="submit">Simpan FAR</button>
-</form>
+  <div class="container">
+    <div class="card">
+      <h2 id="farFormTitle">Tambah FAR</h2>
+      <form id="farForm">
+        <input id="far_equipment" placeholder="Equipment" required type="text"/>
+        <textarea id="far_desc" placeholder="Description"></textarea>
+        <input id="far_date" required type="date"/>
+        <input id="far_pic" placeholder="PIC" type="text"/>
+        <input id="far_remark" placeholder="Remarks" type="text"/>
+        <select id="far_status">
+          <option>Open</option><option>Continue</option>
+          <option>Progress</option><option>Finish</option>
+        </select>
+        <input accept=".png,.jpg,.jpeg,.pdf" id="far_file" type="file"/>
+        <button id="farSubmitBtn" type="submit">Simpan FAR</button>
+      </form>
+    </div>
+    <div class="card">
+      <h2>Data FAR</h2>
+      <div class="tools">
+        <button class="export-json" onclick="exportData('far')">Export JSON</button>
+        <button class="import-json" onclick="importData('far')">Import JSON</button>
+        <button class="export-csv" onclick="exportCSV('far')">Export CSV</button>
+        <button class="clear-btn" onclick="clearData('far')">Clear All</button>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>No</th><th>Equipment</th><th>Description</th><th>Date</th><th>PIC</th>
+            <th>Remarks</th><th>Status</th><th>Picture</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="farTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="card">
-<h2>Data FAR</h2>
-<div class="tools">
-<button class="export-json" onclick="exportData('far')">Export JSON</button>
-<button class="import-json" onclick="importData('far')">Import JSON</button>
-<button class="export-csv" onclick="exportCSV('far')">Export CSV</button>
-<button class="clear-btn" onclick="clearData('far')">Clear All</button>
-</div>
-<div class="table-wrapper">
-<table>
-<thead>
-<tr><th>No</th><th>Equipment</th><th>Description</th><th>Date</th><th>PIC</th><th>Remarks</th><th>Status</th><th>Picture</th><th>Actions</th></tr>
-</thead>
-<tbody id="farTableBody"></tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
+
 <!-- Canibal -->
 <div class="tab-content" id="tab-canibal" style="display:none;">
-<div class="container">
-<div class="card">
-<h2 id="canibalFormTitle">Tambah Canibal</h2>
-<form id="canibalForm">
-<input id="can_equipment" placeholder="Equipment" required="" type="text"/>
-<input id="can_part" placeholder="Part Desc" required="" type="text"/>
-<input id="can_qty" placeholder="Qty" required="" type="number"/>
-<input id="can_from" placeholder="Equip Canibal" required="" type="text"/>
-<input id="can_date" required="" type="date"/>
-<input id="can_pic" placeholder="PIC" type="text"/>
-<input id="can_remark" placeholder="Remarks" type="text"/>
-<select id="can_status">
-<option>Open</option><option>Continue</option><option>Progress</option><option>Finish</option>
-</select>
-<input accept=".png,.jpg,.jpeg,.pdf" id="can_file" type="file"/>
-<button id="canSubmitBtn" type="submit">Simpan Canibal</button>
-</form>
+  <div class="container">
+    <div class="card">
+      <h2 id="canibalFormTitle">Tambah Canibal</h2>
+      <form id="canibalForm">
+        <input id="can_equipment" placeholder="Equipment" required type="text"/>
+        <input id="can_part" placeholder="Part Desc" required type="text"/>
+        <input id="can_qty" placeholder="Qty" required type="number"/>
+        <input id="can_from" placeholder="Equip Canibal" required type="text"/>
+        <input id="can_date" required type="date"/>
+        <input id="can_pic" placeholder="PIC" type="text"/>
+        <input id="can_remark" placeholder="Remarks" type="text"/>
+        <select id="can_status">
+          <option>Open</option><option>Continue</option>
+          <option>Progress</option><option>Finish</option>
+        </select>
+        <input accept=".png,.jpg,.jpeg,.pdf" id="can_file" type="file"/>
+        <button id="canSubmitBtn" type="submit">Simpan Canibal</button>
+      </form>
+    </div>
+    <div class="card">
+      <h2>Data Canibal</h2>
+      <div class="tools">
+        <button class="export-json" onclick="exportData('canibal')">Export JSON</button>
+        <button class="import-json" onclick="importData('canibal')">Import JSON</button>
+        <button class="export-csv" onclick="exportCSV('canibal')">Export CSV</button>
+        <button class="clear-btn" onclick="clearData('canibal')">Clear All</button>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>No</th><th>Equipment</th><th>Part Desc</th><th>Qty</th>
+            <th>Equip Canibal</th><th>Date</th><th>PIC</th><th>Remarks</th>
+            <th>Status</th><th>Document</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="canibalTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="card">
-<h2>Data Canibal</h2>
-<div class="tools">
-<button class="export-json" onclick="exportData('canibal')">Export JSON</button>
-<button class="import-json" onclick="importData('canibal')">Import JSON</button>
-<button class="export-csv" onclick="exportCSV('canibal')">Export CSV</button>
-<button class="clear-btn" onclick="clearData('canibal')">Clear All</button>
-</div>
-<div class="table-wrapper">
-<table>
-<thead>
-<tr><th>No</th><th>Equipment</th><th>Part Desc</th><th>Qty</th><th>Equip Canibal</th><th>Date</th><th>PIC</th><th>Remarks</th><th>Status</th><th>Document</th><th>Actions</th></tr>
-</thead>
-<tbody id="canibalTableBody"></tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
+
 <script>
-  const DB_NAME = "FAR_CANIBAL_DB", DB_VERSION = 1;
+const DB_NAME = "FAR_CANIBAL_DB", DB_VERSION = 1;
 
-  // === IndexedDB Helper ===
-  function saveFileToDB(fileId, fileData) {
-    return new Promise((resolve, reject) => {
-      const req = indexedDB.open(DB_NAME, DB_VERSION);
-      req.onupgradeneeded = e => {
-        const db = e.target.result;
-        if (!db.objectStoreNames.contains("files")) db.createObjectStore("files",{keyPath:"id"});
-      };
-      req.onsuccess = e => {
-        const db = e.target.result;
-        const tx = db.transaction("files","readwrite");
-        tx.objectStore("files").put({id:fileId,data:fileData});
-        tx.oncomplete = ()=>resolve();
-      };
-      req.onerror = ()=>reject(req.error);
-    });
-  }
-  function getFileFromDB(fileId) {
-    return new Promise((resolve, reject) => {
-      if (!fileId) { resolve(null); return; }
-      const req = indexedDB.open(DB_NAME, DB_VERSION);
-      req.onsuccess = e => {
-        const db = e.target.result;
-        if (!db.objectStoreNames.contains("files")) { resolve(null); return; }
-        const tx = db.transaction("files","readonly");
-        const store = tx.objectStore("files");
-        const r = store.get(fileId);
-        r.onsuccess = ()=>resolve(r.result? r.result.data:null);
-        r.onerror = ()=>reject(r.error);
-      };
-      req.onerror = ()=>reject(req.error);
-    });
-  }
-
-  // === Utils ===
-  function switchTab(tab){document.querySelectorAll('.tab-content').forEach(c=>c.style.display='none');
-    document.getElementById('tab-'+tab).style.display='block';
-    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-    event.target.classList.add('active');}
-  function renderFileCell(item){if(!item.fileId)return '';return item.fileName.toLowerCase().endsWith('.pdf')?
-    `<span class="pdf-icon">📄 PDF</span>`:`<img src="" id="thumb-${item.fileId}" class="thumbnail">`;}
-  async function loadThumbnail(fileId,fileName){const d=await getFileFromDB(fileId);
-    if(d&&!fileName.toLowerCase().endsWith('.pdf'))document.getElementById("thumb-"+fileId).src=d;}
-  async function viewFile(fileId,fileName){const d=await getFileFromDB(fileId);if(!d)return;
-    let w=window.open("");if(fileName.toLowerCase().endsWith('.pdf'))w.document.write(`<embed src="${d}" type="application/pdf" width="100%" height="100%">`);
-    else w.document.write(`<img src="${d}" style="max-width:100%">`);}
-  async function downloadFile(fileId,fileName){const d=await getFileFromDB(fileId);if(!d)return;
-    let a=document.createElement("a");a.href=d;a.download=fileName;a.click();}
-
-   
- // === FAR ===
-  let farEditIndex = null;
-
-  function renderFAR() {
-    let records = JSON.parse(localStorage.getItem("FAR_Data") || "[]");
-    let tbody = document.getElementById("farTableBody");
-    tbody.innerHTML = "";
-
-    records.forEach((r, i) => {
-      tbody.innerHTML += `
-        <tr>
-          <td>${i + 1}</td>
-          <td>${r.equipment}</td>
-          <td>${r.desc || ""}</td>
-          <td>${r.date}</td>
-          <td>${r.pic || ""}</td>
-          <td>${r.remark || ""}</td>
-          <td>${r.status || "Open"}</td>
-          <td>${renderFileCell(r)}</td>
-          <td>
-            <button class="view-btn" onclick="viewFile('${r.fileId}','${r.fileName}')">View</button>
-            <button class="download-btn" onclick="downloadFile('${r.fileId}','${r.fileName}')">Download</button>
-            <button class="edit-btn" onclick="editRecord('far', ${i})">Edit</button>
-            <button class="delete-btn" onclick="deleteRow('far', ${i})">Delete</button>
-          </td>
-        </tr>
-      `;
-      loadThumbnail(r.fileId, r.fileName);
-    });
-  }
-
-  document.getElementById("farForm").addEventListener("submit", e => {
-    e.preventDefault();
-    let recs = JSON.parse(localStorage.getItem("FAR_Data") || "[]");
-
-    let obj = {
-      equipment: far_equipment.value,
-      desc: far_desc.value,
-      date: far_date.value,
-      pic: far_pic.value,
-      remark: far_remark.value,
-      status: far_status.value,
-      fileId: null,
-      fileName: null
+// === IndexedDB Helper ===
+function saveFileToDB(fileId, fileData) {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onupgradeneeded = e => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains("files"))
+        db.createObjectStore("files",{keyPath:"id"});
     };
-
-    let file = far_file.files[0];
-
-    let saveAndRender = () => {
-      if (farEditIndex !== null) {
-        recs[farEditIndex] = obj;
-        farEditIndex = null;
-        farFormTitle.textContent = "Tambah FAR";
-        farSubmitBtn.textContent = "Simpan FAR";
-      } else {
-        recs.push(obj);
-      }
-
-      localStorage.setItem("FAR_Data", JSON.stringify(recs));
-      renderFAR();
-      farForm.reset();
+    req.onsuccess = e => {
+      const db = e.target.result;
+      const tx = db.transaction("files","readwrite");
+      tx.objectStore("files").put({id:fileId,data:fileData});
+      tx.oncomplete = ()=>resolve();
     };
-
-    if (file) {
-      let reader = new FileReader();
-      reader.onload = async ev => {
-        obj.fileId = Date.now() + "_" + file.name;
-        obj.fileName = file.name;
-        await saveFileToDB(obj.fileId, ev.target.result);
-        saveAndRender();
-      };
-      reader.readAsDataURL(file);
-    } else {
-      saveAndRender();
-    }
+    req.onerror = ()=>reject(req.error);
   });
-
-
-
-  // === Canibal ===
-  let canEditIndex=null;
-  function renderCanibal(){let recs=JSON.parse(localStorage.getItem("CANIBAL_Data")||"[]");
-    let tbody=document.getElementById("canibalTableBody");tbody.innerHTML="";
-    recs.forEach((r,i)=>{tbody.innerHTML+=`
-      <tr><td>${i+1}</td><td>${r.equipment}</td><td>${r.part}</td><td>${r.qty}</td><td>${r.from}</td>
-      <td>${r.date}</td><td>${r.pic||""}</td><td>${r.remark||""}</td><td>${r.status||"Open"}</td><td>${renderFileCell(r)}</td>
-      <td><button class="view-btn" onclick="viewFile('${r.fileId}','${r.fileName}')">View</button>
-      <button class="download-btn" onclick="downloadFile('${r.fileId}','${r.fileName}')">Download</button>
-      <button class="edit-btn" onclick="editRecord('canibal',${i})">Edit</button>
-      <button class="delete-btn" onclick="deleteRow('canibal',${i})">Delete</button></td></tr>`;loadThumbnail(r.fileId,r.fileName);});}
-  canibalForm.addEventListener("submit",e=>{e.preventDefault();let recs=JSON.parse(localStorage.getItem("CANIBAL_Data")||"[]");
-    let obj={equipment:can_equipment.value,part:can_part.value,qty:can_qty.value,from:can_from.value,
-      date:can_date.value,pic:can_pic.value,remark:can_remark.value,status:can_status.value,fileId:null,fileName:null};
-    let file=can_file.files[0];
-    let saveAndRender=()=>{if(canEditIndex!==null){recs[canEditIndex]=obj;canEditIndex=null;canibalFormTitle.textContent="Tambah Canibal";canSubmitBtn.textContent="Simpan Canibal";}
-      else recs.push(obj);localStorage.setItem("CANIBAL_Data",JSON.stringify(recs));renderCanibal();canibalForm.reset();};
-    if(file){let r=new FileReader();r.onload=async ev=>{obj.fileId=Date.now()+"_"+file.name;obj.fileName=file.name;
-      await saveFileToDB(obj.fileId,ev.target.result);saveAndRender();};r.readAsDataURL(file);}
-    else{saveAndRender();}});
-
-    // === Edit/Delete ===
-  function editRecord(type,i){if(type==="far"){let recs=JSON.parse(localStorage.getItem("FAR_Data")||"[]");let r=recs[i];
-      far_equipment.value=r.equipment;far_desc.value=r.desc;far_date.value=r.date;far_pic.value=r.pic;
-      far_remark.value=r.remark;far_status.value=r.status||"Open";farEditIndex=i;farFormTitle.textContent="Edit FAR";farSubmitBtn.textContent="Update FAR";}
-    else{let recs=JSON.parse(localStorage.getItem("CANIBAL_Data")||"[]");let r=recs[i];
-      can_equipment.value=r.equipment;can_part.value=r.part;can_qty.value=r.qty;can_from.value=r.from;
-      can_date.value=r.date;can_pic.value=r.pic;can_remark.value=r.remark;can_status.value=r.status||"Open";
-      canEditIndex=i;canibalFormTitle.textContent="Edit Canibal";canSubmitBtn.textContent="Update Canibal";}}
-  function deleteRow(type,i){let key=type==="far"?"FAR_Data":"CANIBAL_Data";let recs=JSON.parse(localStorage.getItem(key)||"[]");
-    recs.splice(i,1);localStorage.setItem(key,JSON.stringify(recs));type==="far"?renderFAR():renderCanibal();}
-
-  // === Export/Import/CSV/Clear ===
-  async function exportData(type){let key=type==="far"?"FAR_Data":"CANIBAL_Data";let recs=JSON.parse(localStorage.getItem(key)||"[]");
-    for(let r of recs){if(r.fileId)r.fileData=await getFileFromDB(r.fileId);}let blob=new Blob([JSON.stringify(recs)],{type:"application/json"});
-    let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=key+".json";a.click();}
-  function importData(type){let key=type==="far"?"FAR_Data":"CANIBAL_Data";let input=document.createElement("input");input.type="file";input.accept=".json";
-    input.onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=async ev=>{let recs=JSON.parse(ev.target.result);
-      for(let rec of recs){if(rec.fileData&&rec.fileId){await saveFileToDB(rec.fileId,rec.fileData);delete rec.fileData;}}
-      localStorage.setItem(key,JSON.stringify(recs));type==="far"?renderFAR():renderCanibal();};r.readAsText(f);};input.click();}
-  function exportCSV(type){let key=type==="far"?"FAR_Data":"CANIBAL_Data";let recs=JSON.parse(localStorage.getItem(key)||"[]");if(!recs.length)return;
-    let headers=Object.keys(recs[0]).filter(h=>h!=="fileId"&&h!=="fileData");let csv=headers.join(",")+"\n";
-    recs.forEach(r=>{csv+=headers.map(h=>JSON.stringify(r[h]||"")).join(",")+"\n";});let blob=new Blob([csv],{type:"text/csv"});
-    let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=key+".csv";a.click();}
-  function clearData(type){let key=type==="far"?"FAR_Data":"CANIBAL_Data";if(confirm("Yakin hapus semua data?")){localStorage.removeItem(key);type==="far"?renderFAR():renderCanibal();}}
-
-  // === Init ===
-  renderFAR();renderCanibal();
-</script>
-<div id="translate-page" style="display:none;"></div><div id="save-page" style="display:none;"></div>
-<form id="formFAR">
-<input id="farEquip" placeholder="Equipment" type="text"/>
-<input id="farDesc" placeholder="Description" type="text"/>
-<input id="farDate" type="date"/>
-<input id="farPIC" placeholder="PIC" type="text"/>
-<input id="farRemarks" placeholder="Remarks" type="text"/>
-<select id="farStatus">
-<option>Open</option>
-<option>Continue</option>
-<option>Progress</option>
-<option>Finish</option>
-</select>
-<button onclick="saveFAR()" type="button">Simpan FAR</button>
-</form>
-<script>
-let farData = [];
-
-function saveFAR() {
-  const data = {
-    equipment: document.getElementById('farEquip').value,
-    description: document.getElementById('farDesc').value,
-    date: document.getElementById('farDate').value,
-    pic: document.getElementById('farPIC').value,
-    remarks: document.getElementById('farRemarks').value,
-    status: document.getElementById('farStatus').value
-  };
-  farData.push(data);
-  try {
-    localStorage.setItem('FAR_Data', JSON.stringify(farData));
-  } catch (e) {
-    if (e.name === 'QuotaExceededError') {
-      alert('Data terlalu besar untuk disimpan di localStorage. Silakan simpan ke file JSON.');
-    } else {
-      alert('Gagal menyimpan data: ' + e.message);
-    }
-  }
 }
-</script></body>
+function getFileFromDB(fileId) {
+  return new Promise((resolve, reject) => {
+    if (!fileId) { resolve(null); return; }
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onsuccess = e => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains("files")) { resolve(null); return; }
+      const tx = db.transaction("files","readonly");
+      const store = tx.objectStore("files");
+      const r = store.get(fileId);
+      r.onsuccess = ()=>resolve(r.result? r.result.data:null);
+      r.onerror = ()=>reject(r.error);
+    };
+    req.onerror = ()=>reject(req.error);
+  });
+}
+
+// === Utils ===
+function switchTab(tab){
+  document.querySelectorAll('.tab-content').forEach(c=>c.style.display='none');
+  document.getElementById('tab-'+tab).style.display='block';
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+function renderFileCell(item){
+  if(!item.fileId)return '';
+  return item.fileName.toLowerCase().endsWith('.pdf')?
+    `<span class="pdf-icon">📄 PDF</span>`:`<img src="" id="thumb-${item.fileId}" class="thumbnail">`;
+}
+async function loadThumbnail(fileId,fileName){
+  const d=await getFileFromDB(fileId);
+  if(d&&!fileName.toLowerCase().endsWith('.pdf'))
+    document.getElementById("thumb-"+fileId).src=d;
+}
+async function viewFile(fileId,fileName){
+  const d=await getFileFromDB(fileId);if(!d)return;
+  let w=window.open("");
+  if(fileName.toLowerCase().endsWith('.pdf'))
+    w.document.write(`<embed src="${d}" type="application/pdf" width="100%" height="100%">`);
+  else w.document.write(`<img src="${d}" style="max-width:100%">`);
+}
+async function downloadFile(fileId,fileName){
+  const d=await getFileFromDB(fileId);if(!d)return;
+  let a=document.createElement("a");a.href=d;a.download=fileName;a.click();
+}
+
+// === FAR ===
+let farEditIndex = null;
+function renderFAR() {
+  let records = JSON.parse(localStorage.getItem("FAR_Data") || "[]");
+  let tbody = document.getElementById("farTableBody");
+  tbody.innerHTML = "";
+  records.forEach((r, i) => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${i + 1}</td>
+        <td>${r.equipment}</td>
+        <td>${r.desc || ""}</td>
+        <td>${r.date}</td>
+        <td>${r.pic || ""}</td>
+        <td>${r.remark || ""}</td>
+        <td>${r.status || "Open"}</td>
+        <td>${renderFileCell(r)}</td>
+        <td>
+          <button class="view-btn" onclick="viewFile('${r.fileId}','${r.fileName}')">View</button>
+          <button class="download-btn" onclick="downloadFile('${r.fileId}','${r.fileName}')">Download</button>
+          <button class="edit-btn" onclick="editRecord('far', ${i})">Edit</button>
+          <button class="delete-btn" onclick="deleteRow('far', ${i})">Delete</button>
+        </td>
+      </tr>`;
+    loadThumbnail(r.fileId, r.fileName);
+  });
+}
+document.getElementById("farForm").addEventListener("submit", e => {
+  e.preventDefault();
+  let recs = JSON.parse(localStorage.getItem("FAR_Data") || "[]");
+  let obj = {
+    equipment: far_equipment.value,
+    desc: far_desc.value,
+    date: far_date.value,
+    pic: far_pic.value,
+    remark: far_remark.value,
+    status: far_status.value,
+    fileId: null, fileName: null
+  };
+  let file = far_file.files[0];
+  let saveAndRender = () => {
+    if (farEditIndex !== null) {
+      recs[farEditIndex] = obj;
+      farEditIndex = null;
+      farFormTitle.textContent = "Tambah FAR";
+      farSubmitBtn.textContent = "Simpan FAR";
+    } else recs.push(obj);
+    localStorage.setItem("FAR_Data", JSON.stringify(recs));
+    renderFAR();
+    farForm.reset();
+  };
+  if (file) {
+    let reader = new FileReader();
+    reader.onload = async ev => {
+      obj.fileId = Date.now() + "_" + file.name;
+      obj.fileName = file.name;
+      await saveFileToDB(obj.fileId, ev.target.result);
+      saveAndRender();
+    };
+    reader.readAsDataURL(file);
+  } else saveAndRender();
+});
+
+// === Canibal ===
+let canEditIndex=null;
+function renderCanibal(){
+  let recs=JSON.parse(localStorage.getItem("CANIBAL_Data")||"[]");
+  let tbody=document.getElementById("canibalTableBody");tbody.innerHTML="";
+  recs.forEach((r,i)=>{
+    tbody.innerHTML+=`
+    <tr><td>${i+1}</td><td>${r.equipment}</td><td>${r.part}</td><td>${r.qty}</td><td>${r.from}</td>
+    <td>${r.date}</td><td>${r.pic||""}</td><td>${r.remark||""}</td><td>${r.status||"Open"}</td><td>${renderFileCell(r)}</td>
+    <td><button class="view-btn" onclick="viewFile('${r.fileId}','${r.fileName}')">View</button>
+    <button class="download-btn" onclick="downloadFile('${r.fileId}','${r.fileName}')">Download</button>
+    <button class="edit-btn" onclick="editRecord('canibal',${i})">Edit</button>
+    <button class="delete-btn" onclick="deleteRow('canibal',${i})">Delete</button></td></tr>`;
+    loadThumbnail(r.fileId,r.fileName);
+  });
+}
+canibalForm.addEventListener("submit",e=>{
+  e.preventDefault();
+  let recs=JSON.parse(localStorage.getItem("CANIBAL_Data")||"[]");
+  let obj={equipment:can_equipment.value,part:can_part.value,qty:can_qty.value,from:can_from.value,
+    date:can_date.value,pic:can_pic.value,remark:can_remark.value,status:can_status.value,fileId:null,fileName:null};
+  let file=can_file.files[0];
+  let saveAndRender=()=>{if(canEditIndex!==null){recs[canEditIndex]=obj;canEditIndex=null;
+    canibalFormTitle.textContent="Tambah Canibal";canSubmitBtn.textContent="Simpan Canibal";}
+    else recs.push(obj);
+    localStorage.setItem("CANIBAL_Data",JSON.stringify(recs));
+    renderCanibal();canibalForm.reset();};
+  if(file){let r=new FileReader();r.onload=async ev=>{obj.fileId=Date.now()+"_"+file.name;obj.fileName=file.name;
+    await saveFileToDB(obj.fileId,ev.target.result);saveAndRender();};r.readAsDataURL(file);}
+  else saveAndRender();
+});
+
+// === Edit/Delete ===
+function editRecord(type,i){
+  if(type==="far"){let recs=JSON.parse(localStorage.getItem("FAR_Data")||"[]");let r=recs[i];
+    far_equipment.value=r.equipment;far_desc.value=r.desc;far_date.value=r.date;far_pic.value=r.pic;
+    far_remark.value=r.remark;far_status.value=r.status||"Open";farEditIndex=i;
+    farFormTitle.textContent="Edit FAR";farSubmitBtn.textContent="Update FAR";}
+  else{let recs=JSON.parse(localStorage.getItem("CANIBAL_Data")||"[]");let r=recs[i];
+    can_equipment.value=r.equipment;can_part.value=r.part;can_qty.value=r.qty;can_from.value=r.from;
+    can_date.value=r.date;can_pic.value=r.pic;can_remark.value=r.remark;can_status.value=r.status||"Open";
+    canEditIndex=i;canibalFormTitle.textContent="Edit Canibal";canSubmitBtn.textContent="Update Canibal";}
+}
+function deleteRow(type,i){
+  let key=type==="far"?"FAR_Data":"CANIBAL_Data";
+  let recs=JSON.parse(localStorage.getItem(key)||"[]");
+  recs.splice(i,1);localStorage.setItem(key,JSON.stringify(recs));
+  type==="far"?renderFAR():renderCanibal();
+}
+
+// === Export/Import/CSV/Clear ===
+async function exportData(type){
+  let key=type==="far"?"FAR_Data":"CANIBAL_Data";
+  let recs=JSON.parse(localStorage.getItem(key)||"[]");
+  for(let r of recs){if(r.fileId)r.fileData=await getFileFromDB(r.fileId);}
+  let blob=new Blob([JSON.stringify(recs)],{type:"application/json"});
+  let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=key+".json";a.click();
+}
+function importData(type){
+  let key=type==="far"?"FAR_Data":"CANIBAL_Data";let input=document.createElement("input");input.type="file";input.accept=".json";
+  input.onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=async ev=>{
+    let recs=JSON.parse(ev.target.result);
+    for(let rec of recs){if(rec.fileData&&rec.fileId){await saveFileToDB(rec.fileId,rec.fileData);delete rec.fileData;}}
+    localStorage.setItem(key,JSON.stringify(recs));type==="far"?renderFAR():renderCanibal();};
+  r.readAsText(f);};input.click();
+}
+function exportCSV(type){
+  let key=type==="far"?"FAR_Data":"CANIBAL_Data";let recs=JSON.parse(localStorage.getItem(key)||"[]");if(!recs.length)return;
+  let headers=Object.keys(recs[0]).filter(h=>h!=="fileId"&&h!=="fileData");
+  let csv=headers.join(",")+"\n";
+  recs.forEach(r=>{csv+=headers.map(h=>JSON.stringify(r[h]||"")).join(",")+"\n";});
+  let blob=new Blob([csv],{type:"text/csv"});
+  let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=key+".csv";a.click();
+}
+function clearData(type){
+  let key=type==="far"?"FAR_Data":"CANIBAL_Data";
+  if(confirm("Yakin hapus semua data?")){localStorage.removeItem(key);type==="far"?renderFAR():renderCanibal();}
+}
+
+// === Init ===
+renderFAR();renderCanibal();
+</script>
+</body>
 </html>
